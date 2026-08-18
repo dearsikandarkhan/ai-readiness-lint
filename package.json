@@ -1,0 +1,35 @@
+{
+  "name": "ai-readiness-lint",
+  "version": "0.1.0",
+  "description": "A production-readiness linter for AI agents. Scans agent/prompt code for missing guardrails (error handling, cost caps, human-in-the-loop, evaluation, retries, timeouts, observability, rate limits) and outputs a Lighthouse-style readiness score.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "ai-readiness-lint": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node bin/cli.js"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "langgraph",
+    "crewai",
+    "langchain",
+    "linter",
+    "production-readiness",
+    "ai-governance",
+    "static-analysis"
+  ],
+  "author": "Sikandar",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
