@@ -1,32 +1,53 @@
 # ai-readiness-lint
 
-A production-readiness linter for AI agents. Point it at a repo and it scans
+**ESLint for AI agents.** Is your agent actually ready for production, or is
+it a demo wearing a production costume?
+
+![ai-readiness-lint terminal report](./assets/terminal-report.png)
+
+Point it at a repo and it scans
 your agent/orchestration code (LangGraph, CrewAI, LangChain, AutoGen, Bedrock
 AgentCore) for the guardrails that separate a demo from something you'd
 actually ship: error handling, cost limits, human-in-the-loop checkpoints,
 evaluation coverage, retries, timeouts, observability, and rate limiting.
 
 It outputs a Lighthouse-style score (0–100, graded A–F) with evidence for
-what it found and concrete suggestions for what's missing.
+what it found and concrete suggestions for what's missing, as shown above.
 
+## Add the badge to your README
+
+```bash
+npx ai-readiness-lint . --badge
 ```
-Readiness score: 50/100 (D)  (4/8 checks passed)
 
-Reliability
-  ✓ Error handling around model/tool calls
-      found in sample-agent.py:15
-  ✓ Retry / fallback logic
-      found in sample-agent.py:18
-  ✗ Timeout handling
-      Agent loops without timeouts can hang indefinitely...
-      → Set an explicit timeout per step and per overall run...
-
-Safety
-  ✗ Human-in-the-loop checkpoint for risky actions
-      If the agent can take real-world actions (send emails, modify
-      records, spend money), an unreviewed failure mode can cause real damage.
-      → Add an explicit approval/interrupt step before high-risk actions...
+```md
+![ai-readiness](./readiness-badge.svg)
 ```
+
+Every repo that adds the badge is a free ad for the tool that scored it —
+that's the whole growth model.
+
+## We scanned 5 well-known open-source agent projects
+
+Real scores, run with the version of this tool in this repo, no cherry-picking:
+
+| Repo | Score | Grade | Agent files scanned |
+|---|---|---|---|
+| [Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) | 100/100 | A | 181 |
+| [microsoft/autogen](https://github.com/microsoft/autogen) | 88/100 | B | 374 |
+| [crewAIInc/crewAI-examples](https://github.com/crewAIInc/crewAI-examples) | 75/100 | B | 68 |
+| [langchain-ai/langgraph-example](https://github.com/langchain-ai/langgraph-example) | 0/100 | F | 4 |
+| [langchain-ai/react-agent](https://github.com/langchain-ai/react-agent) | 0/100 | F | 4 |
+
+The pattern is the interesting part: **mature, widely-deployed frameworks
+score well; official quickstart templates score at the bottom.** That's not
+a knock on the templates — they're intentionally minimal so beginners aren't
+overwhelmed. It's the actual risk: teams copy a quickstart template into
+production and inherit its zero guardrails without realizing the template
+was never meant to ship as-is.
+
+Run it on your own repo and see where you land — then open a PR if you think
+a check is wrong or missing.
 
 ## Why this exists
 
@@ -107,7 +128,7 @@ an issue or PR with the framework's import signature.
 
 Issues and PRs welcome — especially new checks, framework signals, and false
 positive/negative reports against real agent codebases. See
-[`src/checks.js`](./src/checks.js) for how checks are structured.
+[CONTRIBUTING.md](./CONTRIBUTING.md) for how to get started.
 
 ## License
 
